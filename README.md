@@ -25,7 +25,7 @@
 * Carla will stop at traffic lights when needed
 * The ROS nodes will publish throttle, steering, and brake commands at 50hz
 
-[image1]: ./images/architecture.png "P1"
+[image1]: ./imgs/architecture.png "P1"
 
 ***Architecture***
 
