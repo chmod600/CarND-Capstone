@@ -1,17 +1,17 @@
 # **Term 3 Capstone Project: Programming a Real Self-Driving Car**
 Self-Driving Car Engineer Nanodegree Program
 
-### Team Name: Blue Bird Dynamics
+***Team Name:*** Blue Bird Dynamics
 ### Project Due: August 13, 2018
 ### Course Ends: August 27, 2018
 ### Team Members:
-Richard Lee (Team Leader - DBW Nodes)
 
-Adam Preston (Member - Waypoint Updater Full)
-
-Eric Tang (Member - Waypoint Updater Partial)
-
-Akshay Khole (Member - Traffic Light Detection)
+| Member        | Role           |
+| ------------- |:-------------:|
+| Richard Lee (Team Leader) | DBW Nodes |
+| Adam Preston | Waypoint Updater Full |
+| Eric Tang | Waypoint Updater Partial |
+| Akshay Khole | Traffic Light Detection |
 
 
 The goals of this project are the following:
