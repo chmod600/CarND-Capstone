@@ -1,5 +1,5 @@
 # **Term 3 Capstone Project: Programming a Real Self-Driving Car**
-Self-Driving Car Engineer Nanodegree Program
+***Self-Driving Car Engineer Nanodegree Program***
 
 ***Team Name:*** Blue Bird Dynamics
 
@@ -17,13 +17,14 @@ Self-Driving Car Engineer Nanodegree Program
 | Akshay Khole | Traffic Light Detection |
 
 
-The goals of this project are the following:
+***The goals of this project are the following:***
 
 * Team members will develop ROS nodes to implement core functionality of the autonomous vehicle system - traffic light detection, control, and waypoint following
 * Carla will smoothly follow the waypoints in the simulator
 * Carla will be driven at the target top speed set for the waypoints
 * Carla will stop at traffic lights when needed
 * The ROS nodes will publish throttle, steering, and brake commands at 50hz
+
 
 
 
