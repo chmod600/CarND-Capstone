@@ -7,8 +7,6 @@ from yaw_controller import YawController
 import pid
 import lowpass
 
-GAS_DENSITY = 2.858
-ONE_MPH = 0.44704
 MAX_TORQUE = 350.0 
 
 class Controller(object):			
