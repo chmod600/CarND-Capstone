@@ -1,10 +1,10 @@
 # **Term 3 Capstone Project: Programming a Real Self-Driving Car**
 Self-Driving Car Engineer Nanodegree Program
 
-***Team Name: Blue Bird Dynamics***
-***Project Due: August 13, 2018***
-***Course Ends: August 27, 2018***
-***Team Members:***
+## Team Name: Blue Bird Dynamics
+## Project Due: August 13, 2018
+## Course Ends: August 27, 2018
+## Team Members:
 Richard Lee (Team Leader - DBW Nodes)
 Adam Preston (Member - Waypoint Updater Full)
 Eric Tang (Member - Waypoint Updater Partial)
