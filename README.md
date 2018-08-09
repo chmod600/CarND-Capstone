@@ -2,10 +2,9 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ***Team Name:*** Blue Bird Dynamics
-### Project Due: August 13, 2018
-### Course Ends: August 27, 2018
-### Team Members:
-
+*** Project Due:*** August 13, 2018
+*** Course Ends:*** August 27, 2018
+*** Team Members:***
 | Member        | Role           |
 | ------------- |:-------------:|
 | Richard Lee (Team Leader) | DBW Nodes |
