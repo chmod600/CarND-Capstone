@@ -28,6 +28,7 @@
 [image1]: ./imgs/architecture.png "P1"
 
 ***Architecture***
+
 The system architecture diagram showing the ROS nodes and topics are shown below:
 
 ![alt text][image1]
@@ -36,15 +37,19 @@ The system architecture diagram showing the ROS nodes and topics are shown below
 The development was divided into 4 parts: Waypoint updater partial, drive-by-wire nodes, traffic light detection, and waypoint updater full.  Each team member is responsible for developing the nodes required for each part and the team leader is also responsible to combine all these nodes to create the final implementation.
 
 ***Waypoint Updater Partial***
+
 (Eric to write something brief)
 
 ***DBW Nodes***
+
 (Richard to write something brief)
 
 ***Traffic Light Detection***
+
 (Akshay to write something brief)
 
 ***Waypoint UPdater Full***
+
 (Adam to write something brief)
 
 
