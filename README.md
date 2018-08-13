@@ -48,9 +48,9 @@ The development was divided into 4 parts: Waypoint updater partial, drive-by-wir
 
 (Akshay to write something brief)
 
-***Waypoint UPdater Full***
+***Waypoint Updater Full***
 
-(Adam to write something brief)
+The waypoint_updater is responsible for providing a set of final waypoints for the vehicle to follow. It achieves this by updating the reference base_waypoints velocity when traffic_waypoints indicates that there a red or amber light has been detected. If an index is received ahead of the vehicle then the velocity is adjusted to fall to zero at the light until it has changed to green. To improve efficiency when braking only the waypoints leading up to the target stopping point are modified and published. Once it is safe to proceed the full set of look ahead waypoints (200) are broadcast. A debounce class has also been implemented to reduce the effect of a classifier error.
 
 
 
