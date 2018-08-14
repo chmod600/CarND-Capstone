@@ -10,6 +10,7 @@ import tf
 import cv2
 import yaml
 from scipy.spatial import KDTree
+from cv_bridge import CvBridge, CvBridgeError
 
 STATE_COUNT_THRESHOLD = 3
 
@@ -22,6 +23,7 @@ class TLDetector(object):
         self.lights = []
 
         self.waypoints_2d = None
+        self.bridge = CvBridge()
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -72,6 +74,8 @@ class TLDetector(object):
 
         """
         light_wp, state = self.process_traffic_lights()
+        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+        cv2.imwrite("/home/student/images/" + str(msg.header.seq) + ".png", cv_image)
 
         '''
         Publish upcoming red lights at camera frequency.
