@@ -42,7 +42,7 @@ The development was divided into 4 parts: Waypoint updater partial, drive-by-wir
 
 ***DBW Nodes***
 
-(Richard to write something brief)
+The purpose of the drive-by-wire (DBW) node is to publish the appropriate throttle, steering and brake command to either the simulator or Carla.  The waypoint_follower node received final_waypoints messages from the waypoint_updater node, and then publish twist messages on the twist_cmd topic to provide the linear and angular velocities to the DBW node.  The parameters that are required to calculate the throttle, brake and steering outputs include, wheel radius, wheel base, steer ratio, maximum lateral acceleration, maximum steering angle, maximum throttle, and maximum braking torque.  These values are obtained from the ROS parameter server. The various topics that need to be subscribed and publish in order to drive the vehicle are implemented in the dbw_node.py file under the twist_controller package. Control of the steering, throttle, and brake output are done in the twist_controller.py file, where a PID controller scheme was used.  The controller also distinguish between manual control and autonomous control.  Effectively, when one switch from manual to autonomous control, the controller will reset itself so that the cross track error will not be accumulated. A low-pass filter is also used to make the steering output less erratic and smoother.
 
 ***Traffic Light Detection***
 
