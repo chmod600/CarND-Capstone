@@ -111,6 +111,7 @@ class TLDetector(object):
         return closest_idx
 
     def get_light_state(self, light, msg):
+        # return light.state
         """Determines the current color of the traffic light
 
         Args:
@@ -187,7 +188,7 @@ class TLDetector(object):
         if closest_light:
             state = self.get_light_state(closest_light, msg)
             return line_wp_idx, state
-        
+
         return -1, TrafficLight.UNKNOWN
 
 

@@ -24,7 +24,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 40 # Number of waypoints we will publish. You can change this number
+LOOKAHEAD_WPS = 25# Number of waypoints we will publish. You can change this number
 MAX_DECEL = .3
 
 class WaypointUpdater(object):
@@ -47,14 +47,14 @@ class WaypointUpdater(object):
         self.waypoint_tree = None
 
         self.loop()
-    
+
     def loop(self):
         rate = rospy.Rate(50)
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
                 self.publish_waypoints()
             rate.sleep()
-    
+
     def get_closest_waypoint_idx(self):
         x = self.pose.pose.position.x
         y = self.pose.pose.position.y
@@ -73,23 +73,26 @@ class WaypointUpdater(object):
         if(val > 0):
             closest_idx = (closest_idx + 1) % len(self.waypoints_2d)
         return closest_idx
-    
+
     def publish_waypoints(self):
         final_lane = self.generate_lane()
         self.final_waypoints_pub.publish(final_lane)
 
     def generate_lane(self):
         lane = Lane()
-        
+        TARGET_VEL = 15.0
         closest_idx = self.get_closest_waypoint_idx()
         farthest_idx = closest_idx + LOOKAHEAD_WPS
         base_waypoints = self.base_lane.waypoints[closest_idx:farthest_idx]
 
         if self.stopline_wp_idx == -1 or (self.stopline_wp_idx >= farthest_idx):
+            for i, wp in enumerate(base_waypoints):
+                base_waypoints[i].twist.twist.linear.x = TARGET_VEL
+
             lane.waypoints = base_waypoints
         else:
             lane.waypoints = self.decelerate_waypoints(base_waypoints, closest_idx)
-        
+
         return lane
 
     def decelerate_waypoints(self, waypoints, closest_idx):
@@ -99,7 +102,7 @@ class WaypointUpdater(object):
             p.pose = wp.pose
 
             tempVar = self.stopline_wp_idx - closest_idx
-            stop_idx = max(tempVar - 2, 0)
+            stop_idx = max(tempVar - 4, 0)
             dist = self.distance(waypoints, i, stop_idx)
             vel = math.sqrt(2 * MAX_DECEL * dist)
 
