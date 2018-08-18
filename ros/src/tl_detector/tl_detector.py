@@ -7,6 +7,9 @@ from styx_msgs.msg import Lane
 from sensor_msgs.msg import Image
 from light_classification.tl_classifier import TLClassifier
 import tf
+import tensorflow as tf2
+import matplotlib.image as mpimg
+from skimage.transform import resize
 import cv2
 import yaml
 from scipy.spatial import KDTree
@@ -73,9 +76,7 @@ class TLDetector(object):
             msg (Image): image from car-mounted camera
 
         """
-        light_wp, state = self.process_traffic_lights()
-        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        cv2.imwrite("/home/student/images/" + str(msg.header.seq) + ".png", cv_image)
+        light_wp, state = self.process_traffic_lights(msg)
 
         '''
         Publish upcoming red lights at camera frequency.
@@ -109,7 +110,7 @@ class TLDetector(object):
         closest_idx = self.waypoint_tree.query([x, y], 1)[1]
         return closest_idx
 
-    def get_light_state(self, light):
+    def get_light_state(self, light, msg):
         """Determines the current color of the traffic light
 
         Args:
@@ -119,9 +120,40 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-        return light.state
+        TL_STATE = 4
+        ypoint=100
+        xpoint=250
+        height=352
+        width=352
+        isTraining = False
+        if(isTraining == True):
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+            cv_image = cropping123 = cv_image[ypoint:ypoint+height, xpoint:xpoint+width, :]
+            cv_image = resize(cv_image, (32, 32))
+            cv2.imwrite("/home/student/images2/" + str(msg.header.seq) + ".png", cropping123)
+        else:
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "rgb8")
+            cv_image = cropping123 = cv_image[ypoint:ypoint+height, xpoint:xpoint+width, :]
+            cv_image = resize(cv_image, (32, 32))
+            cv_image = (cv_image-0.5)/0.5
+            with tf2.Session(graph=tf2.Graph()) as sess:
+                tf2.saved_model.loader.load(sess, ["serve"], "./outModel")
+                graph = tf2.get_default_graph()
+                input1 = graph.get_tensor_by_name("x:0")
+                output = graph.get_tensor_by_name("add_2:0")
+                prediction = sess.run(tf2.argmax(output, 1), {input1: [cv_image]})
+                pred1 = prediction[0]
+                if pred1 == 1:
+                    TL_STATE = 0
+                elif pred1 == 2:
+                    TL_STATE = 2
+                fname = str(prediction) + "_" + str(msg.header.seq)
+                bgrCropped = cv2.cvtColor(cropping123, cv2.COLOR_RGB2BGR)
+                cv2.imwrite("/home/student/images2/" + fname + ".png", bgrCropped)
 
-    def process_traffic_lights(self):
+        return TL_STATE
+
+    def process_traffic_lights(self, msg):
         """Finds closest visible traffic light, if one exists, and determines its
             location and color
 
@@ -139,18 +171,21 @@ class TLDetector(object):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)
 
             diff = len(self.waypoints.waypoints)
+            #rospy.loginfo("--->begin")
             for i, light in enumerate(self.lights):
                 line = stop_line_positions[i]
                 temp_wp_idx = self.get_closest_waypoint(line[0], line[1])
 
                 d = temp_wp_idx - car_wp_idx
-                if d >= 0 and d < diff:
+                #rospy.loginfo("this is diff %f", d)
+                if d >= 0 and d < diff and d < 50:
                     diff = d
                     closest_light = light
                     line_wp_idx = temp_wp_idx
+            #rospy.loginfo("--->end")
 
         if closest_light:
-            state = self.get_light_state(closest_light)
+            state = self.get_light_state(closest_light, msg)
             return line_wp_idx, state
         
         return -1, TrafficLight.UNKNOWN
