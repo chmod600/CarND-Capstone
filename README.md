@@ -13,8 +13,8 @@
 | ------------- |:-------------:|
 | Richard Lee (Team Leader) | DBW Nodes |
 | Adam Preston | Waypoint Updater Full |
-| Eric Tang | Waypoint Updater Partial |
-| Akshay Khole | Traffic Light Detection |
+| Eric Tang | Waypoint Updater Partial / TL Detection|
+
 
 
 ***The goals of this project are the following:***
